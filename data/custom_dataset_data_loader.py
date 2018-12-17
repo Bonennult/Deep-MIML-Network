@@ -25,9 +25,9 @@ class CustomDatasetDataLoader(BaseDataLoader):
         return 'CustomDatasetDataLoader'
 
     def initialize(self, opt):
-        BaseDataLoader.initialize(self, opt)
-        self.dataset = CreateDataset(opt)
-        self.dataloader = torch.utils.data.DataLoader(
+        BaseDataLoader.initialize(self, opt)  #目的是传入参数opt
+        self.dataset = CreateDataset(opt)     #根据opt.model创建一个数据集类“MIMLDataset/KLdataset”，并初始化（包括读取h5文件，放入self.bases,self.labels）
+        self.dataloader = torch.utils.data.DataLoader(  #该接口主要用来将自定义的数据读取接口的输出或者PyTorch已有的数据读取接口的输入按照batch size封装成Tensor，后续只需要再包装成Variable即可作为模型的输入
             self.dataset,
             batch_size=opt.batchSize,
             shuffle=True,

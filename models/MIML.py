@@ -65,7 +65,8 @@ class MIMLModel(BaseModel):
 
         #print(self.bases.size())
         # shape: (batchSize, L*K, num_of_bases)
-        basesnet_output = self.BasesNet(Variable(self.bases, requires_grad=False, volatile=volatile)).view(-1, self.opt.L, self.opt.K, self.opt.num_of_bases)
+        #basesnet_output = self.BasesNet(Variable(self.bases, requires_grad=False, volatile=volatile)).view(-1, self.opt.L, self.opt.K, self.opt.num_of_bases)
+        basesnet_output = self.BasesNet(Variable(self.bases, requires_grad=False)).view(-1, self.opt.L, self.opt.K, self.opt.num_of_bases)
         #print("sub_concept_layer_output:",basesnet_output.size())
         # shape: (batchSize, L, K, num_of_bases)
         sub_concept_pooling_output = self.sub_concept_pooling(basesnet_output).view(-1, self.opt.L, self.opt.num_of_bases).permute(0,2,1).unsqueeze(1)
@@ -136,7 +137,7 @@ class MIMLModel(BaseModel):
             accuracy = correct*1.0/self.label.size()[0]
             self.batch_accuracy.append(accuracy)
         loss = self.loss(self.output, label)
-        self.batch_loss.append(loss.data[0]) 
+        self.batch_loss.append(loss.item())    #modefied self.batch_loss.append(loss.data[0])
         loss.backward()
 
     def display_train(self, writer, index):
@@ -205,7 +206,21 @@ class MIMLModel(BaseModel):
                 gt_label[index[0],int(x)] = 1
         ap = average_precision_score(gt_label.T, prediction.T)
         label = Variable(self.label, requires_grad=False).long()
-        loss = self.loss(self.output, label).data.cpu().numpy()[0]
+        '''print(self.output)
+        print(self.output.shape)
+        print(label)
+        print(label.shape)
+        print(self.loss(self.output, label))
+        print(self.loss(self.output, label).shape)
+        print(self.loss(self.output, label).data)
+        print(self.loss(self.output, label).data.shape)
+        print(self.loss(self.output, label).data.cpu())
+        print(self.loss(self.output, label).data.cpu().shape)
+        print('numpy')
+        print(self.loss(self.output, label).data.cpu().numpy())
+        print(self.loss(self.output, label).data.cpu().numpy().shape)'''
+        loss = self.loss(self.output, label).data.cpu().numpy().item()  #modefied
+        #exit()
         return ap, loss
 
     def optimize_parameters(self):

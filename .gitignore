@@ -1,0 +1,25 @@
+## ignore data files
+*.png
+*.jpg
+*.gif
+*.wav
+*.mp4
+*.mp3
+*.zip
+*.rar
+*.h5
+*.npy
+/dataset/AudioSet-SingleSource/*
+
+#ignore weights
+*.pth
+*.t7
+/ResNet/resnet_torch/
+
+#ignore checkpoints
+/checkpoints/
+/.ipynb_checkpoints/
+
+## 
+__pycache__
+/runs/
