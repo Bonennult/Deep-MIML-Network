@@ -188,7 +188,7 @@ class MIMLModel(BaseModel):
         correct = (self.label.eq(prediction)).sum()
         accuracy = correct*1.0/self.label.size()[0]
         label = Variable(self.label.long(), requires_grad=False)
-        loss = self.loss(self.output, label).data.cpu().numpy()[0]
+        loss = self.loss(self.output, label).data.cpu().numpy().item()   #modefied
         return accuracy, loss
 
     def test_multi_label(self, input):

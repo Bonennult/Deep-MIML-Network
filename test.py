@@ -5,6 +5,8 @@ from options.test_options import TestOptions
 from data.data_loader import CreateDataLoader
 from models.models import create_model
 import time
+import torch
+import os
 
 opt = TestOptions().parse()
 opt.batchSize = 1  # set batchSize = 1 for testing
@@ -21,12 +23,12 @@ accuracies = []
 losses = []
 
 for i, data in enumerate(dataset):
-	if i >= opt.how_many:
-		break
-	print(i)
-	accuracy, loss = model.test(data)
-	accuracies.append(accuracy)
-	losses.append(loss)
+    if i >= opt.how_many:
+        break
+    print(i)
+    accuracy, loss = model.test(data)
+    accuracies.append(accuracy)
+    losses.append(loss)
 
 accuracy = sum(accuracies)/len(accuracies)
 loss = sum(losses)/len(losses)

@@ -5286,3 +5286,163 @@ end of display
 saving the model at the end of epoch 300, total_steps 76800
 current learning rate: 2.441581445851177e-05
 decreased learning rate by  0.94
+D:\Anaconda3\lib\site-packages\h5py\__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+------------ Options -------------
+F: 2401
+HDF5FileRoot: e:\Study\Vision\project\Deep-MIML-Network\dataset
+K: 4
+L: 15
+batchSize: 256
+checkpoints_dir: checkpoints
+dataset: musicInstruments
+fc_dimension: 1024
+gpu_ids: []
+how_many: 50
+isTrain: False
+mode: test
+model: MIML
+multi_label_threshold: 0.3
+nThreads: 0
+name: deepMIML
+norm: max
+num_of_bases: 25
+num_of_fc: 1
+selected_classes: True
+using_multi_labels: True
+which_epoch: latest
+with_batchnorm: True
+zeroCenterInput: False
+-------------- End ----------------
+CustomDatasetDataLoader
+dataset [MIMLDataset] was created
+MIML dataset initialize suceed
+(3,)
+(3,)
+#testing images = 3
+Traceback (most recent call last):
+  File "test.py", line 17, in <module>
+    model = torch.load(os.path.join('.', opt.checkpoints_dir, opt.name, str(opt.which_epoch) + '.pth'))
+NameError: name 'torch' is not defined
+Traceback (most recent call last):
+  File "test.py", line 8, in <module>
+    import pytorch as torch
+ModuleNotFoundError: No module named 'pytorch'
+D:\Anaconda3\lib\site-packages\h5py\__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+------------ Options -------------
+F: 2401
+HDF5FileRoot: e:\Study\Vision\project\Deep-MIML-Network\dataset
+K: 4
+L: 15
+batchSize: 256
+checkpoints_dir: checkpoints
+dataset: musicInstruments
+fc_dimension: 1024
+gpu_ids: []
+how_many: 50
+isTrain: False
+mode: test
+model: MIML
+multi_label_threshold: 0.3
+nThreads: 0
+name: deepMIML
+norm: max
+num_of_bases: 25
+num_of_fc: 1
+selected_classes: True
+using_multi_labels: True
+which_epoch: latest
+with_batchnorm: True
+zeroCenterInput: False
+-------------- End ----------------
+CustomDatasetDataLoader
+dataset [MIMLDataset] was created
+MIML dataset initialize suceed
+(3,)
+(3,)
+#testing images = 3
+Traceback (most recent call last):
+  File "test.py", line 18, in <module>
+    model = torch.load(os.path.join('.', opt.checkpoints_dir, opt.name, str(opt.which_epoch) + '.pth'))
+NameError: name 'os' is not defined
+D:\Anaconda3\lib\site-packages\h5py\__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+------------ Options -------------
+F: 2401
+HDF5FileRoot: e:\Study\Vision\project\Deep-MIML-Network\dataset
+K: 4
+L: 15
+batchSize: 256
+checkpoints_dir: checkpoints
+dataset: musicInstruments
+fc_dimension: 1024
+gpu_ids: []
+how_many: 50
+isTrain: False
+mode: test
+model: MIML
+multi_label_threshold: 0.3
+nThreads: 0
+name: deepMIML
+norm: max
+num_of_bases: 25
+num_of_fc: 1
+selected_classes: True
+using_multi_labels: True
+which_epoch: latest
+with_batchnorm: True
+zeroCenterInput: False
+-------------- End ----------------
+CustomDatasetDataLoader
+dataset [MIMLDataset] was created
+MIML dataset initialize suceed
+(3,)
+(3,)
+#testing images = 3
+0
+Traceback (most recent call last):
+  File "test.py", line 29, in <module>
+    accuracy, loss = model.test(data)
+  File "E:\Study\Vision\project\Deep-MIML-Network\models\MIML.py", line 191, in test
+    loss = self.loss(self.output, label).data.cpu().numpy()[0]
+IndexError: too many indices for array
+D:\Anaconda3\lib\site-packages\h5py\__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+------------ Options -------------
+F: 2401
+HDF5FileRoot: e:\Study\Vision\project\Deep-MIML-Network\dataset
+K: 4
+L: 15
+batchSize: 256
+checkpoints_dir: checkpoints
+dataset: musicInstruments
+fc_dimension: 1024
+gpu_ids: []
+how_many: 50
+isTrain: False
+mode: test
+model: MIML
+multi_label_threshold: 0.3
+nThreads: 0
+name: deepMIML
+norm: max
+num_of_bases: 25
+num_of_fc: 1
+selected_classes: True
+using_multi_labels: True
+which_epoch: latest
+with_batchnorm: True
+zeroCenterInput: False
+-------------- End ----------------
+CustomDatasetDataLoader
+dataset [MIMLDataset] was created
+MIML dataset initialize suceed
+(3,)
+(3,)
+#testing images = 3
+0
+1
+2
+test accuracy is: tensor(0)
+test loss is: 0.9337942401568095

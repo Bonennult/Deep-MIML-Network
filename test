@@ -1,0 +1,9 @@
+python test.py --HDF5FileRoot e:\\Study\\Vision\\project\\Deep-MIML-Network\\dataset --name deepMIML --checkpoints_dir checkpoints \
+  --model MIML --batchSize 256 \
+  --gpu_ids -1 --nThreads 0 \
+  --num_of_fc 1 \
+  --with_batchnorm \
+  --L 15 \
+  --selected_classes \
+  --dataset musicInstruments \
+  --using_multi_labels |& tee -a train.log
