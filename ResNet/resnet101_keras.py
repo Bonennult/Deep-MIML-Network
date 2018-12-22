@@ -1243,21 +1243,21 @@ def resnet_predict(model, image_file):
     im[:,:,0] -= 103.939
     im[:,:,1] -= 116.779
     im[:,:,2] -= 123.68
-    print("image size:", im.shape)
+    #print("image size:", im.shape)
 
     # Insert a new dimension for the batch_size
     im = np.expand_dims(im, axis=0)
-    print("batch_shape", im.shape)
+    #print("batch_shape", im.shape)
 
     softmax = model.predict(im)
     prediction = np.argmax(softmax)
 
-    print("softmax shape:", softmax.shape)
+    #print("softmax shape:", softmax.shape)
 
-    print("Prediction ID:", prediction)
-    print("Class:", ImageNet_Labels[prediction])
-    print("Score:", softmax[0,np.argmax(softmax)])
-    print()
+    #print("Prediction ID:", prediction)
+    #print("Class:", ImageNet_Labels[prediction])
+    #print("Score:", softmax[0,np.argmax(softmax)])
+    #print()
 
     #print(out[0,282], ImageNet_Labels[282])
-    return softmax
+    return softmax[0]

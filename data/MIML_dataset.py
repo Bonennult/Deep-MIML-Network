@@ -21,8 +21,12 @@ def normalizeBases(bases, norm):
 
 def subsetOfClasses(label):
     #15 music instruments: accordion, acoustic_guitar, banjo, cello, drum, electric_guitar, flute, french_horn, harmonica, harp, marimba, piano, saxophone, trombone, violin
-    indexes = [[401], [402], [420], [486], [541], [546], [558], [566], [593], [594], [642], [579,881], [776], [875], [889]]
-    selected_label = np.zeros(15)
+    #indexes = [[401], [402], [420], [486], [541], [546], [558], [566], [593], [594], [642], [579,881], [776], [875], [889]]
+    #selected_label = np.zeros(15)
+    
+    #8 music instruments: ['accordion', 'acoustic_guitar', 'cello',  'flute',  'saxophone', 'trumpet', 'violin', 'xylophone']
+    indexes = [[401], [402,546], [486], [558], [776], [513], [889], [642]]
+    selected_label = np.zeros(8)
     for i,class_indexes in enumerate(indexes):
         for index in class_indexes:
             selected_label[i] = selected_label[i] + label[index]
@@ -90,8 +94,8 @@ class MIMLDataset(BaseDataset):
         self.bases = h5f['bases'][:]
         self.labels = h5f['labels'][:]
         print('MIML dataset initialize suceed')
-        print(self.bases.shape)
-        print(self.labels.shape)
+        print('bases num: ', self.bases.shape)
+        print('labels num: ', self.labels.shape)
     
     def __getitem__(self, index):
         bases = np.load(self.bases[index].decode("utf-8"))

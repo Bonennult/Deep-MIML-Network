@@ -35,7 +35,7 @@ def nmf(filename):
 
     # Calculate nmf for every audio
     for stft in stft_result:
-        nmf_result.append( transformer_nmf.TransformerNMF(input_matrix=stft, num_components=25,
+        nmf_result.append( transformer_nmf.TransformerNMF(input_matrix=stft, num_components=16,
                                                      seed=0, should_do_epsilon=False,
                                                      max_num_iterations=50,
                                                      distance_measure='kl_divergence').template_dictionary)
