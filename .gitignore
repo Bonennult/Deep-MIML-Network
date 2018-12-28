@@ -7,19 +7,31 @@
 *.mp3
 *.zip
 *.rar
+*.gz
+*.tar
 *.h5
+*.json
 *.npy
-/dataset/AudioSet-SingleSource/*
+*.log
+./dataset/AudioSet-SingleSource/*
 
 #ignore weights
 *.pth
 *.t7
-/ResNet/resnet_torch/
+ResNet/resnet_torch/
 
 #ignore checkpoints
-/checkpoints/
-/.ipynb_checkpoints/
+checkpoints/
+.ipynb_checkpoints/
 
 ## 
-__pycache__
-/runs/
+*__pycache__*
+runs/
+seperation/
+
+#ignore nouse files
+exercise.ipynb
+example.py
+./ResNet/resnet-101_keras-Copy1.py
+./ResNet/resnet_152_keras.py
+./ResNet/resnet-152_keras2.py

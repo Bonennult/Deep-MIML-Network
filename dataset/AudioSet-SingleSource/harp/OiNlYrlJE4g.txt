@@ -1,0 +1,10 @@
+harp,1.0
+panpipe, pandean pipe, syrinx,2.9622719012e-05
+cello, violoncello,1.12359380466e-07
+upright, upright piano,9.57997059459e-08
+organ, pipe organ,3.98550490388e-08
+pick, plectrum, plectron,2.18487681281e-08
+maraca,2.03631156381e-08
+suspension bridge,1.89487288083e-08
+electric guitar,1.86346351683e-08
+flute, transverse flute,1.49001317951e-08

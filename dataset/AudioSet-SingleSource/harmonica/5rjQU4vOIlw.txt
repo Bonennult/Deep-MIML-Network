@@ -1,0 +1,10 @@
+harmonica, mouth organ, harp, mouth harp,0.999981403351
+ocarina, sweet potato,0.0018602918135
+Band Aid,0.000134160480229
+"loupe, jeweler's loupe",5.51506855118e-05
+whistle,3.93180089304e-05
+flute, transverse flute,3.90184723074e-05
+burrito,3.37781930284e-05
+rule, ruler,1.63529803103e-05
+panpipe, pandean pipe, syrinx,1.53709952428e-05
+cellular telephone, cellular phone, cellphone, cell, mobile phone,1.21179673442e-05

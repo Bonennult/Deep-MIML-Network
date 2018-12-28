@@ -1,0 +1,10 @@
+upright, upright piano,0.997372031212
+organ, pipe organ,0.402703732252
+desk,0.0886867418885
+grand piano, grand,0.0607328377664
+quill, quill pen,0.0142742358148
+library,0.0135240089148
+menu,0.00846385303885
+photocopier,0.0081353764981
+file, file cabinet, filing cabinet,0.00791963096708
+space bar,0.00628648325801

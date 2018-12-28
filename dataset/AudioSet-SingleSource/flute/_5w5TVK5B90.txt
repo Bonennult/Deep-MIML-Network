@@ -1,0 +1,10 @@
+flute, transverse flute,0.999993443489
+oboe, hautboy, hautbois,0.00506931170821
+bassoon,4.75509805256e-05
+harmonica, mouth organ, harp, mouth harp,3.12536431011e-05
+cornet, horn, trumpet, trump,5.04124500367e-06
+ocarina, sweet potato,3.44620730175e-06
+violin, fiddle,1.04493528852e-06
+barbell,8.10861649825e-07
+whistle,7.6782657743e-07
+panpipe, pandean pipe, syrinx,7.55091150495e-07

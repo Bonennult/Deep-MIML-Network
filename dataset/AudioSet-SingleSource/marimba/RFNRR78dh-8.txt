@@ -1,0 +1,10 @@
+marimba, xylophone,1.0
+upright, upright piano,2.70948858088e-05
+gong, tam-tam,1.70659932337e-05
+drumstick,1.60296785907e-05
+"potter's wheel",1.59900082508e-05
+cleaver, meat cleaver, chopper,1.52288030222e-05
+chime, bell, gong,1.09173824967e-05
+fire screen, fireguard,6.94381333233e-06
+hammer,6.29108990324e-06
+drum, membranophone, tympan,5.83022710998e-06

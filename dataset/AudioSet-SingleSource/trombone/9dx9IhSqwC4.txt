@@ -1,0 +1,10 @@
+trombone,0.996919870377
+cornet, horn, trumpet, trump,0.0238218549639
+bow,0.000945916923229
+lab coat, laboratory coat,0.000616332807112
+sax, saxophone,0.000288563489448
+French horn, horn,0.000230718098464
+oboe, hautboy, hautbois,0.000181547642569
+ladle,0.000176609799382
+violin, fiddle,0.000157298243721
+oxygen mask,0.000126278842799

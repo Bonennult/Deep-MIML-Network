@@ -360,6 +360,19 @@ def ResNet152(include_top=True, weights=None,
                           'at ~/.keras/keras.json.')
     return model
 
+def resnet152_predict(model, image_file):
+
+    #model = ResNet152(include_top=True, weights='imagenet')
+    img = image.load_img(img_file, target_size=(224,224))
+    x = image.img_to_array(img)
+    x = np.expand_dims(x, axis=0)
+    x = preprocess_input(x)
+    print('Input image shape:', x.shape)
+
+    preds = model.predict(x)
+    print('Predicted:', decode_predictions(preds))
+    
+
 if __name__ == '__main__':
     model = ResNet152(include_top=True, weights='imagenet')
     
