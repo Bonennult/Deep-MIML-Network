@@ -32,6 +32,6 @@ seperation/
 #ignore nouse files
 exercise.ipynb
 example.py
-./ResNet/resnet-101_keras-Copy1.py
-./ResNet/resnet_152_keras.py
-./ResNet/resnet-152_keras2.py
+ResNet/resnet-101_keras-Copy1.py
+ResNet/resnet_152_keras.py
+ResNet/resnet-152_keras2.py
