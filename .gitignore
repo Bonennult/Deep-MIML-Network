@@ -13,7 +13,7 @@
 *.json
 *.npy
 *.log
-./dataset/AudioSet-SingleSource/*
+dataset/AudioSet-SingleSource/*
 
 #ignore weights
 *.pth
