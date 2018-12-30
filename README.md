@@ -13,7 +13,7 @@
 ### useful command
 Use the following command to train the deep MIML network:
 ```
-python train.py --HDF5FileRoot path_of_train.h5 \
+python train.py --dataset_root path_of_train_dataset \
   --name deepMIML --checkpoints_dir checkpoints \
   --model MIML --batchSize 64 \
   --dataset musicInstruments \
@@ -45,7 +45,7 @@ tensorboard --logdir=runs
 
 Use the following command to test the deep MIML network:
 ```
-python test.py --HDF5FileRoot path_of_test.h5 \
+python test.py --dataset_root path_of_test_dataset \
   --name deepMIML --checkpoints_dir checkpoints \
   --model MIML --batchSize 64 \
   --dataset musicInstruments \

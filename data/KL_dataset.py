@@ -25,7 +25,7 @@ class KLDataset(BaseDataset):
 		self.bases = []
 
 		#load hdf5 file here
-		h5f_path = os.path.join(opt.HDF5FileRoot, opt.mode + ".h5")
+		h5f_path = os.path.join(opt.dataset_root, opt.mode + ".h5")   # 有改动
 		h5f = h5py.File(h5f_path, 'r')
 		self.bases = h5f['bases'][:]
 		self.labels = h5f['labels'][:]

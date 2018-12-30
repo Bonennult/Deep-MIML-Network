@@ -3,13 +3,23 @@
 
 import os
 import time
+import torch
 from options.train_options import TrainOptions
 from data.data_loader import CreateDataLoader
 from models.models import create_model
 from tensorboardX import SummaryWriter
-import torch
+from preprocess import preprocess_for_train
 
 opt = TrainOptions().parse()
+
+# 对数据进行预处理
+print('Pre-processing datasets for train ...')
+start = time.time()
+preprocess_for_train(opt.dataset_root)
+end = time.time()
+print('Pre-process for train completed !')
+print('Pre-process time : %d min', int((end-start)/60))
+
 data_loader = CreateDataLoader(opt)
 dataset = data_loader.load_data()
 dataset_size = len(data_loader)

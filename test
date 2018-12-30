@@ -1,4 +1,4 @@
-python test.py --HDF5FileRoot e:\\Study\\Vision\\project\\Deep-MIML-Network\\dataset \
+python test.py --dataset_root h:/Study/bpfile/testset25/ \
   --name deepMIML --checkpoints_dir checkpoints \
   --model MIML --batchSize 64 \
   --dataset musicInstruments \

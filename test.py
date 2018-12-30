@@ -1,14 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from options.test_options import TestOptions
-from data.data_loader import CreateDataLoader
-from models.models import create_model
 import time
 import torch
 import os
+from options.test_options import TestOptions
+from data.data_loader import CreateDataLoader
+from models.models import create_model
+from preprocess import preprocess_for_test
 
 opt = TestOptions().parse()
+
+# 对数据进行预处理
+print('Pre-processing datasets for test ...')
+start = time.time()
+preprocess_for_test(opt.dataset_root)
+end = time.time()
+print('Pre-process for test completed !')
+print('Pre-process time : %d min', int((end-start)/60))
+
 opt.batchSize = 1  # set batchSize = 1 for testing
 
 data_loader = CreateDataLoader(opt)

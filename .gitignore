@@ -32,6 +32,8 @@ seperation/
 #ignore nouse files
 exercise.ipynb
 example.py
+nmf.py
+dataset/NMF/audio_import_net.py
 ResNet/resnet-101_keras-Copy1.py
 ResNet/resnet_152_keras.py
 ResNet/resnet-152_keras2.py

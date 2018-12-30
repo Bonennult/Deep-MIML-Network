@@ -24,8 +24,9 @@ def subsetOfClasses(label):
     #indexes = [[401], [402], [420], [486], [541], [546], [558], [566], [593], [594], [642], [579,881], [776], [875], [889]]
     #selected_label = np.zeros(15)
     
-    #8 music instruments: ['accordion', 'acoustic_guitar', 'cello',  'flute',  'saxophone', 'trumpet', 'violin', 'xylophone']
-    indexes = [[401], [402,546], [486], [558], [776], [513], [889], [642]]
+    #8 music instruments: ['accordion','acoustic_guitar','cello','trumpet','flute','xylophone','saxophone','violin']
+    indexes = [[401], [402,546], [486], [513], [558], [642], [776], [889]]
+
     selected_label = np.zeros(8)
     for i,class_indexes in enumerate(indexes):
         for index in class_indexes:
@@ -89,7 +90,7 @@ class MIMLDataset(BaseDataset):
         self.bases = []
 
         #load hdf5 file here
-        h5f_path = os.path.join(opt.HDF5FileRoot, opt.mode + ".h5")
+        h5f_path = os.path.join(opt.dataset_root, opt.mode + ".h5")
         h5f = h5py.File(h5f_path, 'r')
         self.bases = h5f['bases'][:]
         self.labels = h5f['labels'][:]

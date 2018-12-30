@@ -70,7 +70,7 @@ def get_CAM(imdir,savedir,imname):
         CAMs = returnCAM(features_blobs, weight_softmax, [idxs[i]])
         location[i] = np.argmax(CAMs[0]) % width    # 计算列号
         '''
-        # 下面的为保存 heatmap 到图片，其实没用，可以删去
+        # 下面代码目的是保存 heatmap 到图片，其实没用，可以删去
         heatmap = cv2.applyColorMap(cv2.resize(CAMs[0],(width, height)), cv2.COLORMAP_JET)
         result = heatmap * 0.3 + img * 0.5
         savepath = os.path.normpath(os.path.join(imdir,savedir,names[i]))
