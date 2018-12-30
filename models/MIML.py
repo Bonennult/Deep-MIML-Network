@@ -23,7 +23,6 @@ class MIMLModel(BaseModel):
         else:
             self.label = self.Tensor(opt.batchSize)
         self.bases = self.Tensor(opt.batchSize, opt.F, opt.num_of_bases)
-
         self.BasesNet = networks.BasesNet(opt)
         self.sub_concept_pooling = nn.modules.MaxPool2d((opt.K, 1), stride=(1,1))
         self.instance_pooling = nn.modules.MaxPool2d((opt.num_of_bases,1), stride=(1,1))
@@ -52,7 +51,6 @@ class MIMLModel(BaseModel):
                 self.optimizer = optim.Adam(list(self.BasesNet.parameters()), lr=opt.learning_rate, weight_decay=0.00001)
         else:
             self.BasesNet.eval()
-
         self.batch_loss = []
         self.batch_accuracy = []
         self.batch_ap = []
@@ -73,8 +71,8 @@ class MIMLModel(BaseModel):
         #print("sub_concept_pooling_output:",sub_concept_pooling_output.size())
         #softmax
         if self.opt.with_softmax:
-            softmax_normalization_output = self.softmax(sub_concept_pooling_output)
-            self.output = self.instance_pooling(softmax_normalization_output).view(-1, self.opt.L)
+            self.softmax_normalization_output = self.softmax(sub_concept_pooling_output)
+            self.output = self.instance_pooling(self.softmax_normalization_output).view(-1, self.opt.L)
         else:
             self.output = self.instance_pooling(sub_concept_pooling_output).view(-1, self.opt.L)
 
@@ -206,7 +204,9 @@ class MIMLModel(BaseModel):
                 gt_label[index[0],int(x)] = 1
         ap = average_precision_score(gt_label.T, prediction.T)
         label = Variable(self.label, requires_grad=False).long()
-        '''print(self.output)
+        '''
+		print("------------------------------------------Output of Network")
+        print(self.output)
         print(self.output.shape)
         print(label)
         print(label.shape)
@@ -218,7 +218,9 @@ class MIMLModel(BaseModel):
         print(self.loss(self.output, label).data.cpu().shape)
         print('numpy')
         print(self.loss(self.output, label).data.cpu().numpy())
-        print(self.loss(self.output, label).data.cpu().numpy().shape)'''
+        print(self.loss(self.output, label).data.cpu().numpy().shape)
+        print("--------------------------------------------")
+		'''
         loss = self.loss(self.output, label).data.cpu().numpy().item()  #modefied
         #exit()
         return ap, loss

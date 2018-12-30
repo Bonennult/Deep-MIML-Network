@@ -7,20 +7,19 @@ from numpy.linalg import norm
 from time import time
 from sys import stdout
 
-def nmf(V,Winit,Hinit,tol,timelimit,maxiter):
-"""
- (W,H) = nmf(V,Winit,Hinit,tol,timelimit,maxiter)
- W,H: output solution
- Winit,Hinit: initial solution
- tol: tolerance for a relative stopping condition
- timelimit, maxiter: limit of time and iterations
- """
+def nmf_cal(V,Winit,Hinit,tol,timelimit,maxiter,W_trainable=False):
+    """
+    (W,H) = nmf(V,Winit,Hinit,tol,timelimit,maxiter)
+    W,H: output solution
+    Winit,Hinit: initial solution
+    tol: tolerance for a relative stopping condition
+    timelimit, maxiter: limit of time and iterations
+    """
     W = Winit; H = Hinit; initt = time();
 
     gradW = dot(W, dot(H, H.T)) - dot(V, H.T)
     gradH = dot(dot(W.T, W), H) - dot(W.T, V)
     initgrad = norm(r_[gradW, gradH.T])
-    print 'Init gradient norm %f' % initgrad 
     tolW = max(0.001,tol)*initgrad
     tolH = tolW
 
@@ -28,15 +27,17 @@ def nmf(V,Winit,Hinit,tol,timelimit,maxiter):
         # stopping condition
         projnorm = norm(r_[gradW[logical_or(gradW<0, W>0)],
                            gradH[logical_or(gradH<0, H>0)]])
-        if projnorm < tol*initgrad or time() - initt > timelimit:
+        if projnorm < tol*initgrad:
             break
+        if  time() - initt > timelimit:
+            break
+        if W_trainable:
+            (W, gradW, iterW) = nlssubprob(V.T,H.T,W.T,tolW,1000)
+            W = W.T
+            gradW = gradW.T
   
-        (W, gradW, iterW) = nlssubprob(V.T,H.T,W.T,tolW,1000)
-        W = W.T
-        gradW = gradW.T
-  
-        if iterW==1:
-            tolW = 0.1 * tolW
+            if iterW==1:
+                tolW = 0.1 * tolW
 
         (H,gradH,iterH) = nlssubprob(V,W,H,tolH,1000)
         if iterH==1:
@@ -45,25 +46,24 @@ def nmf(V,Winit,Hinit,tol,timelimit,maxiter):
         if iter % 10 == 0:
             stdout.write('.')
 
-    print('\nIter = %d Final proj-grad norm %f' % (iter, projnorm))
     return (W,H)
 
 def nlssubprob(V,W,Hinit,tol,maxiter):
- """
- H, grad: output solution and gradient
- iter: #iterations used
- V, W: constant matrices
- Hinit: initial solution
- tol: stopping tolerance
- maxiter: limit of iterations
- """
+    """
+    H, grad: output solution and gradient
+    iter: #iterations used
+    V, W: constant matrices
+    Hinit: initial solution
+    tol: stopping tolerance
+    maxiter: limit of iterations
+    """
  
     H = Hinit
     WtV = dot(W.T, V)
     WtW = dot(W.T, W) 
 
-    alpha = 1; beta = 0.1;
-    for iter in xrange(1, maxiter):  
+    alpha = 1; beta = 0.5;
+    for iter in range(1, maxiter):  
         grad = dot(WtW, H) - WtV
         projgrad = norm(grad[logical_or(grad < 0, H >0)])
         if projgrad < tol:

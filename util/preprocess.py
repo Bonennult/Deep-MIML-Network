@@ -3,7 +3,7 @@ import numpy as np
 import h5py
 import json
 import random
-from dataset.NMF import audio_import
+from util import audio_import
 from util.feat_extractor import load_model, get_CAM, feat_pred
 
 # idxs，names 是在 feat_extractor.py 中定义的 global 变量
