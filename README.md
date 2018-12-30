@@ -1,17 +1,20 @@
 ## Learning to Separate Object Sounds by Watching Unlabeled Video
 
 ### useful files
-1. `preprocess.ipnb` : Pre-process dataset for train and test
-2. `feat_extrator` : contains classfication and location funtions, used in `preprocess.ipynb`
-3. `train.py` : file to train
-4. `test.py` : file to test
-5. `train` : script to train
-6. `test` : script to test
-7. `tsbd.bat` : script to see train log, double click to run on windows
-8. `gen_dataset.ipynb` : nouse now
+1. `preprocess.ipynb` : Pre-process dataset for train and test
+2. `util/preprocess.py` : contains pre-process functions dataset for train and test, used in `train.py` and `test.py`
+3. `util/feat_extrator.py` : contains classfication and location funtions, used in `preprocess.ipynb` and `preprocess.py`
+4. `train.py` : file to train
+5. `test.py` : file to test
+6. `train` : script to train on linux
+7. `train.bat` : script to train on windows
+8. `test` : script to test on linux
+9. `test.bat` : script to test on windows
+10. `tsbd.bat` : script to see train log, double click to run on windows
+11. `gen_dataset.ipynb` : nouse now
 
 ### useful command
-Use the following command to train the deep MIML network:
+Use the following command to **train** the deep MIML network:
 ```
 python train.py --dataset_root path_of_train_dataset \
   --name deepMIML --checkpoints_dir checkpoints \
@@ -43,7 +46,7 @@ Use the following command to see the train log:
 tensorboard --logdir=runs
 ```
 
-Use the following command to test the deep MIML network:
+Use the following command to **test** the deep MIML network:
 ```
 python test.py --dataset_root path_of_test_dataset \
   --name deepMIML --checkpoints_dir checkpoints \
