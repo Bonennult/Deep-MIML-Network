@@ -8,17 +8,17 @@ from options.train_options import TrainOptions
 from data.data_loader import CreateDataLoader
 from models.models import create_model
 from tensorboardX import SummaryWriter
-from preprocess import preprocess_for_train
+from util.preprocess import preprocess_for_train
 
 opt = TrainOptions().parse()
 
 # 对数据进行预处理
 print('Pre-processing datasets for train ...')
 start = time.time()
-preprocess_for_train(opt.dataset_root)
+#preprocess_for_train(opt.dataset_root)
 end = time.time()
 print('Pre-process for train completed !')
-print('Pre-process time : %d min', int((end-start)/60))
+print('Pre-process time : %d min' % int((end-start)/60))
 
 data_loader = CreateDataLoader(opt)
 dataset = data_loader.load_data()

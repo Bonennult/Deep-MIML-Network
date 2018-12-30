@@ -15,6 +15,8 @@ global features_blobs
 global classes
 global weight_softmax
 labels_path='labels.json'
+global idxs
+global names
 idxs=[401,402,486,513,558,642,776,889]
 names=['accordion','acoustic_guitar','cello','trumpet','flute','xylophone','saxophone','violin']
 

@@ -1,0 +1,1 @@
+python test.py --dataset_root h:/Study/bpfile/testset25/ --name deepMIML --checkpoints_dir checkpoints --model MIML --batchSize 64 --dataset musicInstruments --gpu_ids -1 --nThreads 0 --num_of_fc 1 --with_batchnorm --L 8 --K 1 --num_of_bases 16 --selected_classes --dataset musicInstruments --using_multi_labels

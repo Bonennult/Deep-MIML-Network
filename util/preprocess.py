@@ -1,12 +1,14 @@
 import os
 import numpy as np
 import h5py
+import json
 import random
 from dataset.NMF import audio_import
-from feat_extractor import load_model, get_CAM, feat_pred
+from util.feat_extractor import load_model, get_CAM, feat_pred
 
-idxs=[401, 402, 486, 513, 558, 642, 776, 889]
-names=['accordion','acoustic_guitar','cello','trumpet','flute','xylophone','saxophone','violin']
+# idxs，names 是在 feat_extractor.py 中定义的 global 变量
+# idxs=[401, 402, 486, 513, 558, 642, 776, 889]
+# names=['accordion','acoustic_guitar','cello','trumpet','flute','xylophone','saxophone','violin']
 
 def preprocess_for_train(train_path):
     # train_path = 'h:/Study/bpfile/dataset/'
@@ -65,12 +67,12 @@ def preprocess_for_train(train_path):
             val_bases_encode.append(bases_filepath[i].encode(encoding='utf-8', errors='strict'))
             val_labels_encode.append(labels_filepath[i].encode(encoding='utf-8', errors='strict'))
 
-    h5f = h5py.File('dataset/train.h5', 'w')
+    h5f = h5py.File(os.path.join(train_path, 'train.h5'), 'w')
     h5f.create_dataset('bases', data=train_bases_encode)
     h5f.create_dataset('labels', data=train_labels_encode)
     h5f.close()
 
-    h5f = h5py.File('dataset/val.h5', 'w')
+    h5f = h5py.File(os.path.join(train_path, 'val.h5'), 'w')
     h5f.create_dataset('bases', data=val_bases_encode)
     h5f.create_dataset('labels', data=val_labels_encode)
     h5f.close()
@@ -89,13 +91,15 @@ def preprocess_for_test(test_path):
     # 寻找音频路径与图片路径
     # wav_dir = 'h:/Study/bpfile/testset25/testaudio/'
     # img_dir = 'h:/Study/bpfile/testset25/testimage/'
-    # wav_dir = os.path.normcase(os.path.join(test_path, 'gt_audio/')).replace('\\','/')
-    # img_dir = os.path.normcase(os.path.join(test_path, 'testimage/')).replace('\\','/')
+    wav_dir = os.path.normcase(os.path.join(test_path, 'gt_audio/')).replace('\\','/')
+    img_dir = os.path.normcase(os.path.join(test_path, 'testimage/')).replace('\\','/')
+    '''
     for cur_dir in os.listdir(test_path):
         if 'audio' in cur_dir:
             wav_dir = os.path.normcase(os.path.join(test_path, cur_dir, '/')).replace('\\','/')
         if 'image' in cur_dir:
             img_dir = os.path.normcase(os.path.join(test_path, cur_dir, '/')).replace('\\','/')
+            '''
 
     # 寻找所有 wav 的文件名、图片文件所在文件夹
     # wav_files[0] = 'accordion_1_saxophone_1.wav'
@@ -173,12 +177,16 @@ def preprocess_for_test(test_path):
             test_bases_encode.append(bases_filepath[i].encode(encoding='utf-8', errors='strict'))
             test_labels_encode.append(labels_filepath[i].encode(encoding='utf-8', errors='strict'))
 
-        h5f = h5py.File('dataset/test.h5', 'w')
+        h5f = h5py.File(os.path.join(test_path, 'test.h5'), 'w')
         h5f.create_dataset('bases', data=test_bases_encode)
         h5f.create_dataset('labels', data=test_labels_encode)
         h5f.close()
         
         # 保存乐器位置 locations
-        np.save('dataset/locations'+'.npy', locations)
+        import json
+        for k in locations.keys():
+            locations[k] = list(locations[k])
+        with open(os.path.join(test_path, 'locations.json'),'w') as f:
+            json.dump(locations, f)
         
         print('All work done !')

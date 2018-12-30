@@ -30,7 +30,7 @@ class CustomDatasetDataLoader(BaseDataLoader):
         self.dataloader = torch.utils.data.DataLoader(  #该接口主要用来将自定义的数据读取接口的输出或者PyTorch已有的数据读取接口的输入按照batch size封装成Tensor，后续只需要再包装成Variable即可作为模型的输入
             self.dataset,
             batch_size=opt.batchSize,
-            shuffle=True,
+            shuffle=False,
             num_workers=int(opt.nThreads))
 
     def load_data(self):
