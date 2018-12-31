@@ -6,12 +6,10 @@ import os
 import json
 import h5py
 
-#opt = TestOptions().parse()
-
 def extract_key_bases(opt):
     opt.batchSize = 1  # set batchSize = 1 for testing
 
-    h5f_path = os.path.join(opt.dataset_root, opt.mode + ".h5")
+    h5f_path = os.path.join(opt.dataset_root, "all.h5")
     h5f = h5py.File(h5f_path, 'r')
     img_path = []
     audio_path = []
@@ -27,14 +25,14 @@ def extract_key_bases(opt):
         Bases_idx = list(set(Bases_idx))
         return Bases_idx
 
-    opt.mode = "train"  # 或许可以删掉
+    opt.mode = "train"
 
     data_loader = CreateDataLoader(opt)
     dataset = data_loader.load_data()
     dataset_size = len(data_loader)
     print('#testing images = %d' % dataset_size)
 
-    model = torch.load(os.path.join('.', opt.checkpoints_dir, opt.name, 'latest0' + '.pth'))
+    model = torch.load(os.path.join('.', opt.checkpoints_dir, opt.name, 'latest' + '.pth'))
     model.BasesNet.eval()
 
     key_bases = {}
@@ -64,6 +62,5 @@ def extract_key_bases(opt):
         print("key_bases shape for %d: %d" %(i,len(key_bases[i])))
 
     with open('bases.json','w') as outfile:
-        #print(outfile)
         json.dump(key_bases,outfile,ensure_ascii=False)
         outfile.write('\n')

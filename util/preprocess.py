@@ -13,15 +13,14 @@ from util.feat_extractor import names, idxs
 
 def preprocess_for_train(train_path):
     # train_path = 'h:/Study/bpfile/dataset/'
-    # train_path = 'h:/Study/bpfile/dataset/audios/'
-    train_path = os.path.normcase(os.path.join(train_path, 'audios/')).replace('\\','/')
+    train_path_audio = os.path.normcase(os.path.join(train_path, 'audios/')).replace('\\','/')
     wav_files = []
     bases_filepath = []
     labels_filepath = []
 
     # 遍历数据集 `path` 路径下所有的 wav 文件，记录他们的路径
     # wav_files[0] = 'h:/study/bpfile/dataset/audios/duet/acoustic_guitarviolin/1.wav'
-    for root,dirs,files in os.walk(train_path, topdown=True):
+    for root,dirs,files in os.walk(train_path_audio, topdown=True):
         for name in files:
             if '.wav' in name:
                 wav_files.append(os.path.normcase(root+os.path.sep+name).replace('\\','/'))
@@ -48,8 +47,21 @@ def preprocess_for_train(train_path):
         print(bases_filepath[-1])
         print(labels_filepath[-1])
 
-    # 保存为 train.h5 和 val.h5
+    # 保存所有到 all.h5
     dataset_num = len(wav_files)
+    # 路径 utf-8 编码，否则报错
+    bases_encode = []
+    labels_encode = []
+    for i in range(dataset_num):
+        bases_encode.append(bases_filepath[i].encode(encoding='utf-8', errors='strict'))
+        labels_encode.append(labels_filepath[i].encode(encoding='utf-8', errors='strict'))
+    
+    h5f = h5py.File(os.path.join(train_path, 'all.h5'), 'w')
+    h5f.create_dataset('bases', data=bases_encode)
+    h5f.create_dataset('labels', data=labels_encode)
+    h5f.close()
+    
+    # 保存为 train.h5 和 val.h5
     train_num = int(0.7*dataset_num)
 
     # 随机选取 70% 的数据作为验证集
@@ -90,17 +102,10 @@ def preprocess_for_test(test_path):
     locations = {}
 
     # 寻找音频路径与图片路径
-    # wav_dir = 'h:/Study/bpfile/testset25/testaudio/'
+    # wav_dir = 'h:/Study/bpfile/testset25/gt_audio/'
     # img_dir = 'h:/Study/bpfile/testset25/testimage/'
     wav_dir = os.path.normcase(os.path.join(test_path, 'gt_audio/')).replace('\\','/')
     img_dir = os.path.normcase(os.path.join(test_path, 'testimage/')).replace('\\','/')
-    '''
-    for cur_dir in os.listdir(test_path):
-        if 'audio' in cur_dir:
-            wav_dir = os.path.normcase(os.path.join(test_path, cur_dir, '/')).replace('\\','/')
-        if 'image' in cur_dir:
-            img_dir = os.path.normcase(os.path.join(test_path, cur_dir, '/')).replace('\\','/')
-            '''
 
     # 寻找所有 wav 的文件名、图片文件所在文件夹
     # wav_files[0] = 'accordion_1_saxophone_1.wav'
@@ -147,14 +152,6 @@ def preprocess_for_test(test_path):
             #(locate, CAMs, heatmap) = get_CAM(img_dir+img_folder, 'results', img)  # heatmap 保存为文件
             locate = get_CAM(img_dir+img_folder, 'results', img)
             location = location + locate
-            '''
-            print(np.argmax(CAMs))
-            print(CAMs)
-            plt.figure()
-            plt.imshow(0.3*CAMs)
-            plt.figure()
-            plt.imshow(heatmap)
-            '''
 
         locations[img_folder+'.mp4'] = location
         print(names)
@@ -206,13 +203,6 @@ def preprocess_for_test_by_seg(test_path):
     # img_dir = 'h:/Study/bpfile/testset25/testimage/'
     wav_dir = os.path.normcase(os.path.join(test_path, 'gt_audio/')).replace('\\','/')
     img_dir = os.path.normcase(os.path.join(test_path, 'testimage/')).replace('\\','/')
-    '''
-    for cur_dir in os.listdir(test_path):
-        if 'audio' in cur_dir:
-            wav_dir = os.path.normcase(os.path.join(test_path, cur_dir, '/')).replace('\\','/')
-        if 'image' in cur_dir:
-            img_dir = os.path.normcase(os.path.join(test_path, cur_dir, '/')).replace('\\','/')
-            '''
 
     # 寻找所有 wav 的文件名、图片文件所在文件夹
     # wav_files[0] = 'accordion_1_saxophone_1.wav'
@@ -233,12 +223,12 @@ def preprocess_for_test_by_seg(test_path):
     # 计算 bases 和 labels
     for wav_fname, img_folder in zip(wav_files, img_files):
         assert wav_fname[:-4] == img_folder    # 确保 wav 文件与图片文件夹相对应
-        '''
+        
         # 计算 NMF 并将结果保存在 npy 文件中
         # bases_filepath[0] = 'h:/Study/bpfile/testset25/testaudio/accordion_1_saxophone_1_bases.npy'
         # np.array(nmf_base[0]).shape = (2401, 16)
         nmf_base = audio_import.nmf([wav_dir+wav_fname])
-        np.save(wav_dir+wav_fname[:-4]+'_bases'+'.npy', nmf_base[0])'''
+        np.save(wav_dir+wav_fname[:-4]+'_bases'+'.npy', nmf_base[0])
         bases_filepath.append(wav_dir+wav_fname[:-4]+'_bases'+'.npy')
 
         imgs = []

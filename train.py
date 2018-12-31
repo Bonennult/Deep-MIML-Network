@@ -13,11 +13,11 @@ from util.extract_key_bases import extract_key_bases
 
 if __name__ == "__main__":
     opt = TrainOptions().parse()
-
+    
     # 对数据进行预处理
     print('Pre-processing datasets for train ...')
     start = time.time()
-    #preprocess_for_train(opt.dataset_root)
+    preprocess_for_train(opt.dataset_root)
     end = time.time()
     print('Pre-process for train completed !')
     print('Pre-process time : %d min' % int((end-start)/60))
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     dataset = data_loader.load_data()
     dataset_size = len(data_loader)
     print('#training images = %d' % dataset_size)
-
+    
     #create validation set data loader if validation_on option is set
     if opt.validation_on:
         #temperally set to val to load val data

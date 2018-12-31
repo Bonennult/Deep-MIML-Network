@@ -26,6 +26,7 @@ if __name__ == "__main__":
     print('Pre-process for test completed !')
     print('Pre-process time : %d min' % int((end-start)/60))
 
+    start = time.time()
     data_loader = CreateDataLoader(opt)
     dataset = data_loader.load_data()
     dataset_size = len(data_loader)
@@ -115,13 +116,12 @@ if __name__ == "__main__":
         Orig_pth = audio_path[i].split('/')
         FileDict[Orig_pth[-1]+'.mp4']=[]   # 有改动
         for k,V in enumerate(V_recover):
-            Save_dir = os.path.join(opt.dataset_root, 'Result_sep/')
+            Save_dir = os.path.join(opt.dataset_root, 'result_audio/')
             Dict = {}
             Dict["audio"]=audio_save.Istft(V, Save_dir, Orig_pth[-1], k+1, params, Audio_length)
             Dict["label"]=Instruments[Labels[k]]
             FileDict[Orig_pth[-1]+'.mp4'].append(Dict)  # 有改动
 
-    # print(FileDict)
     with open(os.path.join(opt.dataset_root, 'result_json', 'result.json'),'w') as outfile:
         json.dump(FileDict,outfile,ensure_ascii=False)
         outfile.write('\n')   
@@ -145,6 +145,9 @@ if __name__ == "__main__":
     with open(os.path.join(opt.dataset_root, 'result_json', 'result.json'),'w') as f:
         json.dump(seperations, f)
     
-    print('Result json path  : ', os.path.join(opt.dataset_root, 'result_json', 'result.json'))
-    print('Result audio path : ', os.path.join(opt.dataset_root, 'Result_sep/'))
+    end = time.time()
+    print('Sound source seperation and location complete !')
+    print('Process time : %d min' % int((end-start)/60))
+    print('Result json path  : ', os.path.normpath(os.path.join(opt.dataset_root, 'result_json', 'result.json')))
+    print('Result audio path : ', os.path.normpath(os.path.join(opt.dataset_root, 'result_audio/')))
     print('All work done !')

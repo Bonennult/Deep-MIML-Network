@@ -71,17 +71,8 @@ def get_CAM(imdir,savedir,imname):
     for i in range(0, 8):
         CAMs = returnCAM(features_blobs, weight_softmax, [idxs[i]])
         location[i] = np.argmax(CAMs[0]) % width    # 计算列号
-        '''
-        # 下面代码目的是保存 heatmap 到图片，其实没用，可以删去
-        heatmap = cv2.applyColorMap(cv2.resize(CAMs[0],(width, height)), cv2.COLORMAP_JET)
-        result = heatmap * 0.3 + img * 0.5
-        savepath = os.path.normpath(os.path.join(imdir,savedir,names[i]))
-        if not os.path.exists(savepath):
-            os.makedirs(savepath)
-        cv2.imwrite(os.path.join(savepath,imname), result)
-        '''
         
-    return location #(location, cv2.resize(CAMs[0],(width, height)))
+    return location
 
 def feat_pred(imdir,imname):   # 计算8个乐器类别的概率并返回
     img_pil = Image.open(os.path.join(imdir,imname))
@@ -131,20 +122,3 @@ def feat_pred_by_seg(imdir,imname):   # 将图片从中间分割成左右两个�
     for i in range(0, 8):
         probs_right.append(probs1[idxs[i]])
     return probs_left, probs_right
-
-'''
-def main():
-    imdir='h:study/bpfile/dataset/images/duet/flutetrumpet/4'
-    load_model()
-    imlist=os.listdir(imdir)
-    probs=np.zeros([8])
-    for im in imlist:
-        if '.jpg' in im or '.png' in im:
-            probs1=get_CAM(imdir,'results',im)
-            probs=probs+np.array(probs1)
-    print(probs)
-    print(names)
-
-if __name__=='__main__':
-    main()
-'''
