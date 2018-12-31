@@ -1,6 +1,6 @@
 python train.py --dataset_root h:/Study/bpfile/dataset/ \
   --name deepMIML --checkpoints_dir checkpoints \
-  --model MIML --batchSize 256 \
+  --model MIML --batchSize 64 \
   --dataset musicInstruments \
   --L 8 --num_of_bases 16 \
   --num_of_fc 1 \

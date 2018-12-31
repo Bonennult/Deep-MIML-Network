@@ -10,7 +10,7 @@ import json
 
 global net
 global normalize
-global preprocess
+global pre_process
 global features_blobs
 global classes
 global weight_softmax
@@ -40,7 +40,7 @@ def hook_feature(module, input, output):
 def load_model():
     global net
     global normalize
-    global preprocess
+    global pre_process
     global features_blobs
     global classes
     global weight_softmax
@@ -54,7 +54,7 @@ def load_model():
        mean=[0.485, 0.456, 0.406],
        std=[0.229, 0.224, 0.225]
     )
-    preprocess = transforms.Compose([
+    pre_process = transforms.Compose([
        transforms.Resize((224,224)),
        transforms.ToTensor(),
        normalize
@@ -85,12 +85,10 @@ def get_CAM(imdir,savedir,imname):
 
 def feat_pred(imdir,imname):   # 计算8个乐器类别的概率并返回
     img_pil = Image.open(os.path.join(imdir,imname))
-    img_tensor = preprocess(img_pil)
+    img_tensor = pre_process(img_pil)
     img_variable = Variable(img_tensor.unsqueeze(0))
     if torch.cuda.is_available():
         img_variable=img_variable.cuda()
-    img = cv2.imread(os.path.join(imdir,imname))
-    height, width, _ = img.shape
     logit = net(img_variable)
     h_x = F.softmax(logit, dim=1).data.squeeze()
     if torch.cuda.is_available():
@@ -101,6 +99,40 @@ def feat_pred(imdir,imname):   # 计算8个乐器类别的概率并返回
         probs.append(probs1[idxs[i]])
     return probs
 
+def feat_pred_by_seg(imdir,imname):   # 将图片从中间分割成左右两个，分别计算8个乐器类别的概率并返回
+    img_pil = Image.open(os.path.join(imdir,imname))
+    width, height = img_pil.size
+    img_pil_left = img_pil.crop((0,0,width//2,height))
+    img_pil_right = img_pil.crop((width//2,0,width,height))
+    # 处理左边图片
+    img_tensor = pre_process(img_pil_left)
+    img_variable = Variable(img_tensor.unsqueeze(0))
+    if torch.cuda.is_available():
+        img_variable=img_variable.cuda()
+    logit = net(img_variable)
+    h_x = F.softmax(logit, dim=1).data.squeeze()
+    if torch.cuda.is_available():
+        h_x=h_x.cpu()
+    probs1 = h_x.numpy()
+    probs_left=[]
+    for i in range(0, 8):
+        probs_left.append(probs1[idxs[i]])
+    # 处理右边图片
+    img_tensor = pre_process(img_pil_right)
+    img_variable = Variable(img_tensor.unsqueeze(0))
+    if torch.cuda.is_available():
+        img_variable=img_variable.cuda()
+    logit = net(img_variable)
+    h_x = F.softmax(logit, dim=1).data.squeeze()
+    if torch.cuda.is_available():
+        h_x=h_x.cpu()
+    probs1 = h_x.numpy()
+    probs_right=[]
+    for i in range(0, 8):
+        probs_right.append(probs1[idxs[i]])
+    return probs_left, probs_right
+
+'''
 def main():
     imdir='h:study/bpfile/dataset/images/duet/flutetrumpet/4'
     load_model()
@@ -115,5 +147,4 @@ def main():
 
 if __name__=='__main__':
     main()
-            
-
+'''

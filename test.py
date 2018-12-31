@@ -10,8 +10,8 @@ from util import audio_import,audio_save,nmf_calculate
 from options.test_options import TestOptions
 from data.data_loader import CreateDataLoader
 from models.models import create_model
-from util.preprocess import preprocess_for_test
-from util.feat_extractor import names
+from util.preprocess import preprocess_for_test, preprocess_for_test_by_seg
+from util.feat_extractor import names, idxs
 
 
 if __name__ == "__main__":
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # 对数据进行预处理
     print('Pre-processing datasets for test ...')
     start = time.time()
-    #preprocess_for_test(opt.dataset_root)
+    preprocess_for_test_by_seg(opt.dataset_root)
     end = time.time()
     print('Pre-process for test completed !')
     print('Pre-process time : %d min' % int((end-start)/60))
@@ -121,12 +121,14 @@ if __name__ == "__main__":
             Dict["label"]=Instruments[Labels[k]]
             FileDict[Orig_pth[-1]+'.mp4'].append(Dict)  # 有改动
 
-    print(FileDict)
+    # print(FileDict)
     with open(os.path.join(opt.dataset_root, 'result_json', 'result.json'),'w') as outfile:
         json.dump(FileDict,outfile,ensure_ascii=False)
         outfile.write('\n')   
     accuracy = sum(accuracies)/len(accuracies)
     loss = sum(losses)/len(losses)
+    print('Sound source seperation completed !')
+    print()
     
     # 音源定位
     import json
@@ -143,4 +145,6 @@ if __name__ == "__main__":
     with open(os.path.join(opt.dataset_root, 'result_json', 'result.json'),'w') as f:
         json.dump(seperations, f)
     
+    print('Result json path  : ', os.path.join(opt.dataset_root, 'result_json', 'result.json'))
+    print('Result audio path : ', os.path.join(opt.dataset_root, 'Result_sep/'))
     print('All work done !')

@@ -16,7 +16,7 @@ def nmf(filename):
     for stft in stft_result:
         W_init = np.random.rand(stft.shape[0],16)
         H_init = np.random.rand(16,stft.shape[1])
-        (W,H) = nmf_calculate.nmf_cal(stft,W_init,H_init,1e-8,100,100,True)
+        (W,H) = nmf_calculate.nmf_cal(stft,W_init,H_init,1e-4,100,100,True)
         print(np.dot(W,H))
         print(stft)
         print(stft-np.dot(W,H))
