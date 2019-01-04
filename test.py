@@ -122,6 +122,8 @@ if __name__ == "__main__":
             Dict["label"]=Instruments[Labels[k]]
             FileDict[Orig_pth[-1]+'.mp4'].append(Dict)  # 有改动
 
+    if not os.path.exists(os.path.join(opt.dataset_root, 'result_json')):
+        os.mkdir(os.path.normpath(os.path.join(opt.dataset_root, 'result_json')))
     with open(os.path.join(opt.dataset_root, 'result_json', 'result.json'),'w') as outfile:
         json.dump(FileDict,outfile,ensure_ascii=False)
         outfile.write('\n')   
@@ -142,6 +144,8 @@ if __name__ == "__main__":
         locate1 = locate[names.index(seperations[file][1]['label'])]
         seperations[file][0]['position'] = int(locate0 > locate1)
         seperations[file][1]['position'] = 1 - seperations[file][0]['position']
+    if not os.path.exists(os.path.join(opt.dataset_root, 'result_json')):
+        os.path.mkdir(os.path.normpath(os.path.join(opt.dataset_root, 'result_json')))
     with open(os.path.join(opt.dataset_root, 'result_json', 'result.json'),'w') as f:
         json.dump(seperations, f)
     
